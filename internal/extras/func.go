@@ -2,7 +2,6 @@ package extras
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"regexp"
@@ -26,13 +25,23 @@ func CommandExist(command string) bool {
 	}
 }
 
+// Function to check if a path is already added
+func AlreadyAdded(paths []string, newPath string) bool {
+	for _, v := range paths {
+		if v == newPath {
+			return true
+		}
+	}
+	return false
+}
+
 // Function to check if path has a git repo
 func IsGitPathValid(path string) bool {
 
 	// check if path is valid
 	_, err := os.Stat(path)
 	if err != nil {
-		log.Fatal("Path not valid")
+		fmt.Println("Path not valid")
 		return false
 	}
 
@@ -40,7 +49,7 @@ func IsGitPathValid(path string) bool {
 	gitPath := fmt.Sprintf("%s/.git", path)
 	_, err = os.Stat(gitPath)
 	if err != nil {
-		log.Fatal("Path with no git repo")
+		fmt.Println("Path with no git repo")
 		return false
 	}
 
@@ -62,7 +71,7 @@ func IsGitPathValid(path string) bool {
 		}
 
 	} else {
-		log.Fatal("Cat dependency not fount, can't check repo")
+		fmt.Println("Cat dependency not fount, can't check repo")
 		return false
 	}
 
