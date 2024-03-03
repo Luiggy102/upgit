@@ -22,11 +22,11 @@ var _ = json.Unmarshal(pathsFile, &Paths)
 
 func main() {
 	// flags
-	addPath := flag.String("add", " ", "add your git repo path")
-	printStatus := flag.Bool("status", false, "print the paths status")
-	pullChanges := flag.Bool("pull", false, "pull changes in saved repos")
-	listRepos := flag.Bool("list", false, "list added repos")
-	removeRepo := flag.String("rm", " ", "remove added repo with the repo name")
+	addPath := flag.String("a", " ", "add your git repo path")
+	printStatus := flag.Bool("s", false, "print the paths status")
+	pullChanges := flag.Bool("ll", false, "pull changes in saved repos")
+	listRepos := flag.Bool("l", false, "list added repos")
+	removeRepo := flag.String("r", " ", "remove added repo with the repo name")
 
 	// flag.Usage = func() {
 	// 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
