@@ -35,6 +35,11 @@ func AlreadyAdded(paths []string, newPath string) bool {
 	return false
 }
 
+// find repo name with regex
+func GetRepoName(path string) string {
+	return regexp.MustCompile(`[^\\\/]*$`).FindString(path)
+}
+
 // Function to check if path has a git repo
 func IsGitPathValid(path string) bool {
 
