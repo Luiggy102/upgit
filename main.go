@@ -22,9 +22,10 @@ var _ = json.Unmarshal(pathsFile, &Paths)
 
 func main() {
 	// flags
-	addPath := flag.String("a", " ", "add your git repo path")
-	printStatus := flag.Bool("s", false, "print the paths status")
-	pullChanges := flag.Bool("l", false, "pull changes in saved repos")
+	addPath := flag.String("add", " ", "add your git repo path")
+	printStatus := flag.Bool("status", false, "print the paths status")
+	pullChanges := flag.Bool("pull", false, "pull changes in saved repos")
+	listRepos := flag.Bool("list", false, "list added repos")
 	flag.Parse()
 
 	var wg sync.WaitGroup
@@ -69,6 +70,12 @@ func main() {
 			cmd.PullChanges(path, &wg)
 		}
 		wg.Wait()
+		return
+	}
+
+	// ListRepos flag
+	if *listRepos {
+		cmd.ListRepos(Paths)
 		return
 	}
 

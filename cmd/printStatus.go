@@ -25,10 +25,10 @@ func PrintStatus(path string, wg *sync.WaitGroup) {
 	if found {
 		status = fmt.Sprintf("Repo: %s\n%s",
 			color.MagentaString(repoName),
-			color.GreenString("Status: ok\n"))
+			color.GreenString("Status: ok"))
 		fmt.Println(status)
 	} else {
-		status = fmt.Sprintf("Repo: %s\nStatus: %s\n",
+		status = fmt.Sprintf("Repo: %s\nStatus: %s",
 			color.MagentaString(repoName),
 			color.RedString(status))
 		fmt.Println(status)
