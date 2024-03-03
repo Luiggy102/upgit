@@ -28,6 +28,8 @@ func main() {
 	listRepos := flag.Bool("l", false, "list added repos")
 	removeRepo := flag.String("r", " ", "remove added repo with the repo name")
 
+	statusNotification := flag.Bool("sn", false, "print a notificacion with the status")
+
 	// flag.Usage = func() {
 	// 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
 	//
@@ -104,6 +106,20 @@ func main() {
 	default:
 		Paths = cmd.RemoveRepo(*removeRepo, Paths)
 		save()
+		return
+	}
+
+	// status notificacion flag
+	if *statusNotification {
+		if len(Paths) > 0 {
+			for _, path := range Paths {
+				wg.Add(1)
+				go cmd.StatusNotification(path, &wg)
+			}
+			wg.Wait()
+		} else {
+			color.Yellow("No repos added yet")
+		}
 		return
 	}
 

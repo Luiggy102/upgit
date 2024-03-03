@@ -18,6 +18,7 @@ func RemoveRepo(repoName string, paths []string) []string {
 			if found {
 				fmt.Println("Deleted repo", paths[i])
 				paths = append(paths[:i], paths[i+1:]...)
+				break
 			} else {
 				fmt.Println("Coudn't find repo")
 			}

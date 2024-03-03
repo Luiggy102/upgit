@@ -28,7 +28,7 @@ func PrintStatus(path string, wg *sync.WaitGroup) {
 			color.GreenString("Status: ok"))
 		fmt.Println(status)
 	} else {
-		status = fmt.Sprintf("Repo: %s\nStatus: %s",
+		status = fmt.Sprintf("Repo: %s\nLog: %s",
 			color.MagentaString(repoName),
 			color.RedString(status))
 		fmt.Println(status)
