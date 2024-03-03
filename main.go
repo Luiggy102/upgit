@@ -26,6 +26,16 @@ func main() {
 	printStatus := flag.Bool("status", false, "print the paths status")
 	pullChanges := flag.Bool("pull", false, "pull changes in saved repos")
 	listRepos := flag.Bool("list", false, "list added repos")
+	removeRepo := flag.String("rm", " ", "remove added repo with the repo name")
+
+	// flag.Usage = func() {
+	// 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+	//
+	// 	flag.VisitAll(func(f *flag.Flag) {
+	// 		fmt.Fprintf(os.Stderr, "-%s    \t%s\n", f.Name, f.Usage)
+	// 	})
+	// }
+
 	flag.Parse()
 
 	var wg sync.WaitGroup
@@ -54,22 +64,30 @@ func main() {
 
 	// print status flag
 	if *printStatus {
-		for _, path := range Paths {
-			wg.Add(1)
-			go cmd.PrintStatus(path, &wg)
+		if len(Paths) > 0 {
+			for _, path := range Paths {
+				wg.Add(1)
+				go cmd.PrintStatus(path, &wg)
+			}
+			wg.Wait()
+		} else {
+			color.Yellow("No repos added yet")
 		}
-		wg.Wait()
 		return
 	}
 
 	// pull changes flags
 	if *pullChanges {
-		okPaths, _ := cmd.CheckStatus(Paths)
-		for _, path := range okPaths {
-			wg.Add(1)
-			cmd.PullChanges(path, &wg)
+		if len(Paths) > 0 {
+			okPaths, _ := cmd.CheckStatus(Paths)
+			for _, path := range okPaths {
+				wg.Add(1)
+				cmd.PullChanges(path, &wg)
+			}
+			wg.Wait()
+		} else {
+			color.Yellow("No repos added yet")
 		}
-		wg.Wait()
 		return
 	}
 
@@ -79,7 +97,18 @@ func main() {
 		return
 	}
 
-	fmt.Println("use -h or --help for usage info")
+	// removeRepo flag
+	switch *removeRepo {
+	case " ":
+		//
+	default:
+		Paths = cmd.RemoveRepo(*removeRepo, Paths)
+		save()
+		return
+	}
+
+	fmt.Println(`Be aware of multiple git repos and make multiple pulls!
+	        use -h or --help for usage info`)
 }
 
 // save path
