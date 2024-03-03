@@ -28,8 +28,8 @@ func main() {
 	listRepos := flag.Bool("l", false, "list added repos")
 	removeRepo := flag.String("r", " ", "remove added repo with the repo name")
 
-	statusNotification := flag.Bool("sn", false, "print a notificacion with the status")
-	pullNotificatin := flag.Bool("lln", false, "print a notificacion with the pull log")
+	statusNotification := flag.Bool("sn", false, "display a notification with the status of repos")
+	pullNotificatin := flag.Bool("lln", false, "display a notification with the pulls progress")
 
 	// flag.Usage = func() {
 	// 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
