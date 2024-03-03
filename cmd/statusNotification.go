@@ -18,30 +18,30 @@ func StatusNotification(path string, wg *sync.WaitGroup) {
 
 		color.Red("Feature not available for OsX")
 
+	}
+
+	if e.CommandExist("dunst") && e.CommandExist("dunstify") {
+
+		cmd := fmt.Sprintf("cd %s && git status", path)
+		out, _ := exec.Command("/bin/sh", "-c", cmd).Output()
+		status := string(out)
+		found, _ := regexp.MatchString("nothing to commit", status)
+
+		repoName := e.GetRepoName(path)
+
+		if found {
+			cmd = fmt.Sprintf("dunstify '  Repo: %s' 'Status: Ok'",
+				repoName)
+			exec.Command("/bin/sh", "-c", cmd).Run()
+		} else {
+			cmd = fmt.Sprintf("dunstify '  Repo: %s' 'Log: %s' -u critical -t 14000",
+				repoName, status)
+			exec.Command("/bin/sh", "-c", cmd).Run()
+		}
+
 	} else {
 
-		if e.CommandExist("dunst") && e.CommandExist("dunstify") {
-
-			cmd := fmt.Sprintf("cd %s && git status", path)
-			out, _ := exec.Command("/bin/sh", "-c", cmd).Output()
-			status := string(out)
-			found, _ := regexp.MatchString("nothing to commit", status)
-
-			if found {
-				cmd = fmt.Sprintf("dunstify '  Ruta: %s' 'Status: Ok'",
-					path)
-				exec.Command("/bin/sh", "-c", cmd).Run()
-			} else {
-				cmd = fmt.Sprintf("dunstify '  Ruta: %s' 'Status: %s' -u critical -t 15000",
-					path, status)
-				exec.Command("/bin/sh", "-c", cmd).Run()
-			}
-
-		} else {
-
-			color.Red("Don't have dunst dependency installed")
-
-		}
+		color.Red("Don't have dunst dependency installed")
 
 	}
 

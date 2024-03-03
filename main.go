@@ -29,6 +29,7 @@ func main() {
 	removeRepo := flag.String("r", " ", "remove added repo with the repo name")
 
 	statusNotification := flag.Bool("sn", false, "print a notificacion with the status")
+	pullNotificatin := flag.Bool("lln", false, "print a notificacion with the pull log")
 
 	// flag.Usage = func() {
 	// 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
@@ -117,6 +118,19 @@ func main() {
 				go cmd.StatusNotification(path, &wg)
 			}
 			wg.Wait()
+		} else {
+			color.Yellow("No repos added yet")
+		}
+		return
+	}
+
+	// pull notificacion flag
+	if *pullNotificatin {
+		if len(Paths) > 0 {
+			okPaths, _ := cmd.CheckStatus(Paths)
+			for i, path := range okPaths {
+				cmd.PullNotification(path, i+1, len(okPaths))
+			}
 		} else {
 			color.Yellow("No repos added yet")
 		}
