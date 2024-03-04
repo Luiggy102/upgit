@@ -35,7 +35,7 @@ upgit -h
 Use `-a` or adding a path to a git repo with a remote origin
 
 ```bash
-upgit -a <<REPO PATH>>
+upgit -a <<REPO-PATH>>
 ```
 
 #### List added repos
@@ -49,7 +49,7 @@ upgit -l
 Use `-r` for delete added repo
 
 ```bash
-upgit -r <<REPO NAME>>
+upgit -r <<REPO-NAME>>
 ```
 
 #### Print status
