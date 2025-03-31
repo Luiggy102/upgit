@@ -63,7 +63,7 @@ upgit -s
 Use `-ll` for make a pull of added repos
 
 ```bash
-upgit -l
+upgit -ll
 ```
 
 ## Notifications (linux only)
